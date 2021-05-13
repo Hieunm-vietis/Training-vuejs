@@ -54,13 +54,30 @@
     export default {
         data() {
             return {
-                 
+                user: {
+                    name : '',
+                    email : '',
+                    status : '',
+                    password : ''
+                },
+                users: {},
+                errors: [], 
             }
         },
         created() {
+            this.getListUser();
         },
         methods: {
-            
+            getListUser(page) {
+                fetch('http://127.0.0.1:8000/api/users?page=' + page)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.users = data;
+                    })
+                    .catch(function(error) {
+                        console.log('Looks like there was a problem: \n', error);
+                    });
+            },
         },
         mounted() {
         }
